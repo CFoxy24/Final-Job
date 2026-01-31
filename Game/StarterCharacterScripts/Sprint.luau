@@ -26,30 +26,30 @@ screenGui.IgnoreGuiInset = true
 screenGui.ResetOnSpawn = false
 screenGui.Parent = player:WaitForChild("PlayerGui")
 
-local GrosseBar = Instance.new("Frame")
-GrosseBar.Size = UDim2.new(0.25, 0, 0.025, 0)
-GrosseBar.Position = UDim2.new(0.375, 0, 0.93, 0)
-GrosseBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-GrosseBar.BackgroundTransparency = 0.4
-GrosseBar.BorderSizePixel = 0
-GrosseBar.Parent = screenGui
+local Bar = Instance.new("Frame")
+Bar.Size = UDim2.new(0.25, 0, 0.025, 0)
+Bar.Position = UDim2.new(0.375, 0, 0.93, 0)
+Bar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Bar.BackgroundTransparency = 0.4
+Bar.BorderSizePixel = 0
+Bar.Parent = screenGui
 
-local GrosseCorner = Instance.new("UICorner")
-GrosseCorner.CornerRadius = UDim.new(1, 0)
-GrosseCorner.Parent = GrosseBar
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(1, 0)
+Corner.Parent = Bar
 
-local BonneBarDeStaminahmmmm = Instance.new("Frame")
-BonneBarDeStaminahmmmm.Name = "StaminaBar"
-BonneBarDeStaminahmmmm.Size = UDim2.new(1, 0, 1, 0)
-BonneBarDeStaminahmmmm.Position = UDim2.new(0, 0, 0, 0)
-BonneBarDeStaminahmmmm.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
-BonneBarDeStaminahmmmm.BackgroundTransparency = 0.1
-BonneBarDeStaminahmmmm.BorderSizePixel = 0
-BonneBarDeStaminahmmmm.Parent = GrosseBar
+local StaminaBar = Instance.new("Frame")
+StaminaBar.Name = "StaminaBar"
+StaminaBar.Size = UDim2.new(1, 0, 1, 0)
+StaminaBar.Position = UDim2.new(0, 0, 0, 0)
+StaminaBar.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
+StaminaBar.BackgroundTransparency = 0.1
+StaminaBar.BorderSizePixel = 0
+StaminaBar.Parent = Bar
 
 local InnerCorner = Instance.new("UICorner")
 InnerCorner.CornerRadius = UDim.new(1, 0)
-InnerCorner.Parent = BonneBarDeStaminahmmmm
+InnerCorner.Parent = StaminaBar
 
 local uiTweenA, uiTweenB
 local BG_VISIBLE_TRANSP = 0.4
@@ -74,29 +74,29 @@ local function SetStaminaUIVisible(visible)
 	if uiTweenB then uiTweenB:Cancel() end
 
 	if visible then
-		GrosseBar.Visible = true
+		Bar.Visible = true
 
-		uiTweenA = TweenService:Create(GrosseBar, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		uiTweenA = TweenService:Create(Bar, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
 			BackgroundTransparency = BG_VISIBLE_TRANSP
 		})
-		uiTweenB = TweenService:Create(BonneBarDeStaminahmmmm, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		uiTweenB = TweenService:Create(StaminaBar, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
 			BackgroundTransparency = INNER_VISIBLE_TRANSP
 		})
 		uiTweenA:Play()
 		uiTweenB:Play()
 	else
-		uiTweenB = TweenService:Create(BonneBarDeStaminahmmmm, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		uiTweenB = TweenService:Create(StaminaBar, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
 			BackgroundTransparency = HIDDEN_TRANSP
 		})
-		uiTweenA = TweenService:Create(GrosseBar, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+		uiTweenA = TweenService:Create(Bar, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
 			BackgroundTransparency = HIDDEN_TRANSP
 		})
 		uiTweenB:Play()
 		uiTweenA:Play()
 
 		uiTweenA.Completed:Connect(function()
-			if BonneBarDeStaminahmmmm.BackgroundTransparency >= 0.99 then
-				GrosseBar.Visible = false
+			if StaminaBar.BackgroundTransparency >= 0.99 then
+				Bar.Visible = false
 			end
 		end)
 	end
@@ -134,7 +134,7 @@ RunService.RenderStepped:Connect(function(deltaTime)
 	end
 
 	local Pourcent = Stamina / MaxStamina
-	BonneBarDeStaminahmmmm.Size = UDim2.new(Pourcent, 0, 1, 0)
+	StaminaBar.Size = UDim2.new(Pourcent, 0, 1, 0)
 
 	if Pourcent >= 1 then
 		SetStaminaUIVisible(false)
